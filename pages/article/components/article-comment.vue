@@ -2,11 +2,11 @@
   <div>
     <form class="card comment-form">
       <div class="card-block">
-        <textarea class="form-control" placeholder="Write a comment..." rows="3"></textarea>
+        <textarea class="form-control" placeholder="Write a comment..." rows="3" v-model="body"></textarea>
       </div>
       <div class="card-footer">
         <img :src="user.image" class="comment-author-img" />
-        <button class="btn btn-sm btn-primary">
+        <button class="btn btn-sm btn-primary" @click.prevent="submitComment">
           Post Comment
         </button>
       </div>
@@ -41,7 +41,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getComments } from '@/api/article'
+import { getComments, addComment } from '@/api/article'
 export default {
   name: 'ArticleComment',
   props: {
@@ -53,7 +53,8 @@ export default {
   data () {
     return {
       // 文章列表
-      comments: []
+      comments: [],
+      body: ''
     }
   },
   async mounted () {
@@ -63,6 +64,13 @@ export default {
   },
   computed: {
     ...mapState(['user'])
+  },
+  methods: {
+    async submitComment () {
+      const { data } = await addComment(this.article.slug, this.body)
+      this.comments.unshift(data.comment)
+      this.body = ''
+    }
   }
 }
 </script>

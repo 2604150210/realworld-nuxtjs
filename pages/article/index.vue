@@ -16,6 +16,11 @@
     <div class="row article-content">
       <div class="col-md-12" v-html="article.body">
       </div>
+      <ul class="tag-list">
+        <li class="tag-default tag-pill tag-outline" v-for="tag in article.tagList" :key="tag">
+          {{tag}}
+        </li>
+      </ul>
     </div>
 
     <hr />
@@ -28,7 +33,7 @@
 
       <div class="col-xs-12 col-md-8 offset-md-2">
           <ArticleComment v-if="user" :article="article" />
-          <ArticlUnlogin v-else />
+          <ArticleUnlogin v-else />
       </div>
 
     </div>
@@ -44,13 +49,13 @@ import MarkdownIt from 'markdown-it'
 import { getArticle } from '@/api/article'
 import ArticleMeta from './components/article-meta'
 import ArticleComment from './components/article-comment'
-import ArticlUnlogin from './components/article-unlogin'
+import ArticleUnlogin from './components/article-unlogin'
 export default {
   name: 'ArticleIndx',
   components: {
     ArticleMeta,
     ArticleComment,
-    ArticlUnlogin
+    ArticleUnlogin
   },
   async asyncData ({ params }) {
     const { data } = await getArticle(params.slug)

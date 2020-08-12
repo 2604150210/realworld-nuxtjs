@@ -17,3 +17,11 @@ export const register = data => {
     data
   })
 }
+// 修改用户资料
+export const updateUser = data => {
+  return request({
+    method: 'PUT',
+    url: '/api/user',
+    data
+  })
+}

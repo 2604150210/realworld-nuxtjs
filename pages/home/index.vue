@@ -185,6 +185,7 @@ export default {
   },
   methods: {
     async onFavorite (article) {
+      if (!this.user ) return this.$router.push('/login')
       article.favoriteDisabled = true // 禁用点击
       if(article.favorited) {
         // 取消点赞
